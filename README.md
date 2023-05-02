@@ -4,9 +4,9 @@ Este projeto consiste em um site de educação que permite aos usuários fazerem
 
 ## :technologist: Membros da equipe
 
-David Machado Couto Bezerra
-Curso: Engenharia de Computação.
-Matricula: 475664
+David Machado Couto Bezerra\n
+Curso: Engenharia de Computação.\n
+Matricula: 475664\n
 
 ## :people_holding_hands: Papéis ou tipos de usuário da aplicação
 
