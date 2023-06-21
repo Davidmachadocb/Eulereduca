@@ -1,4 +1,4 @@
-# :checkered_flag: EulerEduca
+# :checkered_flag: FeynmanEduca
 
 Este projeto consiste em um site de educação que permite aos usuários fazerem login e compartilharem suas explicações sobre determinados conteúdos. Os textos dos usuários podem ser avaliados pelos demais usuários do site, proporcionando uma interação dinâmica entre os participantes. Além disso, os usuários têm acesso aos conteúdos de outros usuários, permitindo o compartilhamento de conhecimento e a ampliação de aprendizado. A plataforma também conta com ferramentas para organização e categorização dos conteúdos, facilitando a navegação e a busca de informações específicas. O objetivo principal do site é promover o aprendizado colaborativo, estimulando a produção e disseminação de conhecimento entre os usuários.
 
