@@ -10,51 +10,49 @@ Matricula: 475664
 
 ## :people_holding_hands: Papéis ou tipos de usuário da aplicação
 
-Informe aqui os tipos de usuário que irão interagir com a aplicação. Ex: administrador, locador, locatario, usuário não logado.
-
-> Tenha em mente que obrigatoriamente a aplicação deve possuir funcionalidades acessíveis a todos os tipos de usuário e outra funcionalidades restritas a certos tipos de usuários.
+- Usuário não registrado
+- Usuário registrado
 
 ## :spiral_calendar: Entidades ou tabelas do sistema
 
-Liste as principais entidades do sistema.
+- Usuário
+- Artigo
+- Profile
 
 ## :triangular_flag_on_post:	 Principais funcionalidades da aplicação
 
-Descreve ou liste brevemente as principais funcionalidades da aplicação que será desenvolvida. Destaque a funcionalidades que serão acessévies a todos os usuários e aquelas restriras a usuários logados.
+- Usuário não registrador poderão ver os artigos feitos por usuários registrados.
+- Usuário registrador pode criar artigos, remover artigos e editar seu profile.
 
-
-----
-
-:warning::warning::warning: As informações a seguir devem ser enviadas juntamente com a versão final do projeto. :warning::warning::warning:
-
-
-----
 
 ## :desktop_computer: Tecnologias e frameworks utilizados
 
 **Frontend:**
 
-Lista as tecnologias, frameworks e bibliotecas utilizados.
+- VueJS v3.0, Vue-Router e Pinia.
+- Axios
 
 **Backend:**
 
-Lista as tecnologias, frameworks e bibliotecas utilizados.
-
+- Strapi
 
 ## :shipit: Operações implementadas para cada entidade da aplicação
 
 
 | Entidade| Criação | Leitura | Atualização | Remoção |
 | --- | --- | --- | --- | --- |
-| Entidade 1 | X |  X  |  | X |
-| Entidade 2 | X |    |  X | X |
-| Entidade 3 | X |    |  |  |
-
-> Lembre-se que é necessário implementar o CRUD de pelo menos duas entidades.
+| Usuário |  |    |  |  |
+| Artigo | X |  X  |  X | X |
+| Entidade 3 |  | X  | X |  |
 
 ## :neckbeard: Rotas da API REST utilizadas
 
 | Método HTTP | URL |
 | --- | --- |
-| GET | api/entidade1/|
-| POST | api/entidade2 |
+| GET | api/artigos/ |
+| GET | 	/users/me |
+| POST | 	api/artigos/ |
+| POST | 	/auth/local |
+| GET | api/artigos/{id} |
+
+
