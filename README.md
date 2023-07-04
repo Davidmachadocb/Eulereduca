@@ -54,6 +54,7 @@ Matricula: 475664
 | POST | 	api/artigos/ |
 | POST | 	/auth/local |
 | GET | api/artigos/{id} |
+| DELETE | api/artigos/{id} |
 | GET | api/comentarios/ |
 | POST | api/comentarios/ |
 
