@@ -6,20 +6,26 @@
         <p class="card-text">{{ article.attributes.Resumo }}</p>
         <p class="card-text"><strong>Autor:</strong> {{ article.attributes.Autor }}</p>
         <div class="article-content" v-html="article.attributes.Texto"></div>
+        <Comentarios :articleId="this.$route.params.id" />
       </div>
     </div>
   </div>
 </template>
 
+
   
 <script>
 import axios from "axios";
+import Comentarios from '../components/comentario/Comentarios.vue';
 
 export default {
   data() {
     return {
       article: null,
     };
+  },
+  components: {
+    Comentarios,
   },
   mounted() {
     const articleId = this.$route.params.id;

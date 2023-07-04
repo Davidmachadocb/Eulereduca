@@ -17,7 +17,7 @@
       <div class="form-group">
         <label for="confirmPassword">Confirm Password:</label>
         <input type="password" id="confirmPassword" v-model="confirmPassword" class="form-control" required>
-        <!--to show error msg if passwords do not match-->
+        <!--to show error msg if passwords do not match-->>
         <p v-if="passwordMismatch" class="error-message">Passwords do not match.</p>
       </div>
       <button type="submit" class="btn btn-primary">Register</button>
@@ -31,46 +31,36 @@ import axios from 'axios';
 export default {
   data() {
     return {
-      profilePicture: null,
-      profilePicturePreview: null,
-      currentStatus: '',
-      about: ''
+      name: '',
+      email: '',
+      password: '',
+      confirmPassword: '',
+      passwordMismatch: false // New property for password mismatch error
     };
   },
   methods: {
-    async saveProfile() {
+    async register() {
+      this.passwordMismatch = false; // Reset password mismatch error
+
+      if (this.password !== this.confirmPassword) {
+        // Passwords don't match, handle the error
+        this.passwordMismatch = true;
+        return;
+      }
+
       try {
-        const formData = new FormData();
-        formData.append('profilePicture', this.profilePicture);
-        formData.append('currentStatus', this.currentStatus);
-        formData.append('about', this.about);
+        await axios.post('auth/local/register', {
+          username: this.name,
+          email: this.email,
+          password: this.password
+        });
 
-        await axios.post('auth/local/register', formData);
-
-        // Reset the form after saving
-        this.profilePicture = null;
-        this.profilePicturePreview = null;
-        this.currentStatus = '';
-        this.about = '';
-
-        // Display a success message or perform any additional actions
+        // Registration successful, redirect to login page
+        this.$router.push('/login');
       } catch (error) {
-        // Handle the error and display an error message
+        // Registration failed, handle the error
+        console.error('Registration failed:', error);
       }
-    },
-    onProfilePictureChange(event) {
-      const file = event.target.files[0];
-      if (file) {
-        this.profilePicture = file;
-        this.previewProfilePicture();
-      }
-    },
-    previewProfilePicture() {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        this.profilePicturePreview = e.target.result;
-      };
-      reader.readAsDataURL(this.profilePicture);
     }
   }
 };

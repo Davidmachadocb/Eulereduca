@@ -6,11 +6,9 @@
           <div class="card mb-4 box-shadow">
             <div class="card-body">
               <h5 class="card-title" style="font-weight: bold; font-size: 1.2rem;">{{ article.attributes.Titulo }}</h5>
+              <p class="card-text">Autor: {{ article.attributes.Autor }}</p>
               <p class="card-text">{{ truncateText(article.attributes.Resumo, 250) }}</p>
               <div class="d-flex justify-content-between align-items-center">
-                <div class="btn-group">
-                  <button type="button" class="btn btn-sm btn-outline-secondary">Curtir</button>
-                </div>
                 <router-link :to="'/artigo/' + article.id" class="btn btn-primary">Leia mais</router-link>
               </div>
             </div>
@@ -20,8 +18,6 @@
     </div>
   </div>
 </template>
-
-
 
 <script>
 import axios from "axios";

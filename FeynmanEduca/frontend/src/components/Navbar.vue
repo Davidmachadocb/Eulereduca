@@ -58,6 +58,7 @@ export default {
     logout() {
       const userStore = useUserStore();
       userStore.logout();
+      localStorage.clear();
       this.$router.push('/login');
     },
   },

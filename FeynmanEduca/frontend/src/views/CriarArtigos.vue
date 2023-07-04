@@ -60,8 +60,7 @@ export default {
         this.article.title = '';
         this.article.summary = '';
         this.article.content = '';
-        this.article.image = null;
-
+        
       } catch (error) {
         // Handle the error
         console.error('Article creation failed:', error);

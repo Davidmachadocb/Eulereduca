@@ -34,47 +34,53 @@
 import axios from 'axios';
 
 export default {
-  data() {
-    return {
-      profilePicture: null,
-      profilePicturePreview: null,
-      currentStatus: '',
-      about: ''
-    };
-  },
-  methods: {
-    async saveProfile() {
-      try {
-        await axios.put('user/me', {
-            Profile: this.profilePicture,
-            Job: this.currentStatus,
-            About: this.about
-        });
-
-        this.profilePicture = null;
-        this.profilePicturePreview = null;
-        this.currentStatus = '';
-        this.about = '';
-
-      } catch (error) {}
+    data() {
+        return {
+            profilePicture: null,
+            profilePicturePreview: null,
+            currentStatus: '',
+            about: ''
+        };
     },
-    onProfilePictureChange(event) {
-      const file = event.target.files[0];
-      if (file) {
-        this.profilePicture = file;
-        this.previewProfilePicture();
-      }
-    },
-    previewProfilePicture() {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        this.profilePicturePreview = e.target.result;
-      };
-      reader.readAsDataURL(this.profilePicture);
+    methods: {
+        async saveProfile() {
+            try {
+                await axios.post('profiles', {
+                    Job: this.currentStatus,
+                    Picture: this.profilePicture,
+                    About: this.about,
+                    Name: this.$route.query.name,
+                });
+
+                this.profilePicture = null;
+                this.profilePicturePreview = null;
+                this.currentStatus = '';
+                this.about = '';
+
+                this.$router.push('/login');
+
+            } catch (error) {
+                console.error('Error saving profile:', error);
+            }
+        },
+        onProfilePictureChange(event) {
+            const file = event.target.files[0];
+            if (file) {
+                this.profilePicture = file;
+                this.previewProfilePicture();
+            }
+        },
+        previewProfilePicture() {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                this.profilePicturePreview = e.target.result;
+            };
+            reader.readAsDataURL(this.profilePicture);
+        }
     }
-  }
 };
 </script>
+  
 
   
 <style scoped>
