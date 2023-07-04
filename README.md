@@ -17,7 +17,7 @@ Matricula: 475664
 
 - Usuário
 - Artigo
-- Profile
+- Comentario
 
 ## :triangular_flag_on_post:	 Principais funcionalidades da aplicação
 
@@ -42,8 +42,8 @@ Matricula: 475664
 | Entidade| Criação | Leitura | Atualização | Remoção |
 | --- | --- | --- | --- | --- |
 | Usuário |  |    |  |  |
-| Artigo | X |  X  |  X | X |
-| Entidade 3 |  | X  | X |  |
+| Artigo | X |  X  |  | X |
+| Comentario | X | X  |  |  |
 
 ## :neckbeard: Rotas da API REST utilizadas
 
@@ -54,5 +54,8 @@ Matricula: 475664
 | POST | 	api/artigos/ |
 | POST | 	/auth/local |
 | GET | api/artigos/{id} |
+| GET | api/comentarios/ |
+| POST | api/comentarios/ |
+
 
 
