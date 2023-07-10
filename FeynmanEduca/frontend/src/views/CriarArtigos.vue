@@ -17,13 +17,13 @@
         <textarea id="content" v-model="article.content" required></textarea>
       </div>
 
-
       <button type="submit" class="create-article-button">Criar</button>
     </form>
     <p v-if="error" class="error-message">{{ error }}</p>
+    <p v-if="successMessage" class="success-message">{{ successMessage }}</p>
   </div>
 </template>
-  
+
 <script>
 import axios from 'axios';
 import { useUserStore } from '../stores/state';
@@ -38,6 +38,7 @@ export default {
         content: '',
       },
       error: '',
+      successMessage: '',
     };
   },
   methods: {
@@ -51,40 +52,37 @@ export default {
           users_permissions_user: parseInt(this.user.id)
         };
 
-        console.log(artigo)
-
-        const response = await axios.post('artigos',
-          {
-            data: artigo
-          },
-          {
-            headers: {
-              Authorization: `Bearer ${this.user.jwt}`
-            }
-          });
+        const response = await axios.post('artigos', { data: artigo }, {
+          headers: {
+            Authorization: `Bearer ${this.user.jwt}`
+          }
+        });
 
         this.article.title = '';
         this.article.summary = '';
         this.article.content = '';
-
+        this.successMessage = 'Artigo criado com sucesso!';
+        setTimeout(() => {
+          this.successMessage = '';
+          this.$router.push('/profile');
+        }, 2000);
       } catch (error) {
-        // Handle the error
         console.error('Article creation failed:', error);
-        this.error = 'Failed to create the article. Please try again.';
+        this.error = 'Falha ao criar o artigo. Por favor, tente novamente.';
       }
     },
   },
   computed: {
     user() {
-      return useUserStore().$state; // Obtém o estado da store
+      return useUserStore().$state;
     }
   },
   mounted() {
-    this.article.user = this.user; // Define o estado da store como propriedade 'user' do objeto do artigo
+    this.article.user = this.user;
   }
-
 };
 </script>
+
   
 <style scoped>
 .create-article {

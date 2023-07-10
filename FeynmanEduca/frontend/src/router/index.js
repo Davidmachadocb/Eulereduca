@@ -39,7 +39,7 @@ const router = createRouter({
     },
     {
       path: '/editar-artigo/:id',
-      name: '/editar-artigo/',
+      name: 'editar-artigo',
       component: () => import('@/views/EditarArtigo.vue'),
       meta: {
         requiresAuth: true
@@ -50,7 +50,8 @@ const router = createRouter({
       name: 'comentarios',
       component: () => import('@/views/comentarios.vue'),
       meta: {
-        permissions: ['admin']
+        requiresAuth: true,
+        permissions: ['Admin']
       }
     },
     {
@@ -64,17 +65,24 @@ const router = createRouter({
   ]
 })
 
-router.beforeEach((to, from) => {
+router.beforeEach((to, from, next) => {
   const userStore = useUserStore();
-  if (to.meta.permissions) {
+  const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
+
+  if (requiresAuth && !userStore.isAuthenticated) {
+    next({ name: 'login' });
+  } else if (to.meta.permissions) {
     if (!userStore.isAuthenticated) {
-      return { path: "/login" }
+      next({ path: "/login" });
+    } else if (!userStore.isAdmin) {
+      next({ path: "/" });
     } else {
-      if(!userStore.isAdmin) {
-        return { path: "/" }
-      }
+      next();
     }
+  } else {
+    next();
   }
 });
+
 
 export default router
