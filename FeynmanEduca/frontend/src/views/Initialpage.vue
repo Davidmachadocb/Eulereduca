@@ -43,12 +43,12 @@ export default {
   },
   async created() {
     try {
-      const response = await axios.get('users/me', {
+      const response = await axios.get('users/me?populate=role', {
         headers: {
           Authorization: 'Bearer ' + localStorage.getItem('token')
         }
       });
-
+      console.log(response)
       this.user = response.data;
     } catch (error) {
       console.error('Failed to fetch user data:', error);

@@ -21,6 +21,12 @@
     "articleID": {
       "type": "integer",
       "required": true
+    },
+    "artigo": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::artigo.artigo",
+      "inversedBy": "comentarios"
     }
   }
 }

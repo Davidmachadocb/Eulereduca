@@ -23,6 +23,9 @@
           <li class="nav-item" v-if="isAuthenticated">
             <router-link to="/profile" class="nav-link">Perfil</router-link>
           </li>
+          <li class="nav-item" v-if="isAuthenticated && isAdmin">
+            <router-link to="/comentarios" class="nav-link">Comentarios</router-link>
+          </li>
         </ul>
       </div>
 
@@ -53,6 +56,12 @@ export default {
       const userStore = useUserStore();
       return userStore.isAuthenticated;
     },
+    isAdmin() {
+      const userStore = useUserStore();
+      const isAdmin = userStore.isAdmin;
+      console.log(isAdmin)
+      return isAdmin;
+    }
   },
   methods: {
     logout() {
@@ -64,6 +73,7 @@ export default {
   },
 };
 </script>
+
 
 <style scoped>
 /* Styles remain the same */

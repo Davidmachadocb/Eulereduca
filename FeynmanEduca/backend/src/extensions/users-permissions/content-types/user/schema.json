@@ -64,6 +64,17 @@
       "target": "plugin::users-permissions.role",
       "inversedBy": "users",
       "configurable": false
+    },
+    "comentarios": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::comentario.comentario"
+    },
+    "artigos": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::artigo.artigo",
+      "mappedBy": "users_permissions_user"
     }
   }
 }

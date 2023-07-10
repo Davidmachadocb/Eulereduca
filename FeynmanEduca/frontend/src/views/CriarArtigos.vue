@@ -16,7 +16,7 @@
         <label for="summary">Texto:</label>
         <textarea id="content" v-model="article.content" required></textarea>
       </div>
-      
+
 
       <button type="submit" class="create-article-button">Criar</button>
     </form>
@@ -43,24 +43,30 @@ export default {
   methods: {
     async createArticle() {
       try {
-        const userState = this.user;
         const artigo = {
           Titulo: this.article.title,
           Texto: this.article.content,
-          Autor: userState.username,
+          Autor: this.user.username,
           Resumo: this.article.summary,
+          users_permissions_user: parseInt(this.user.id)
         };
 
-        const response = await axios.post('artigos', {
-          data: artigo
-        });
+        console.log(artigo)
 
-        console.log(response.data);
+        const response = await axios.post('artigos',
+          {
+            data: artigo
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${this.user.jwt}`
+            }
+          });
 
         this.article.title = '';
         this.article.summary = '';
         this.article.content = '';
-        
+
       } catch (error) {
         // Handle the error
         console.error('Article creation failed:', error);

@@ -13,6 +13,7 @@
 <script>
 import MyArticlesSection from '../components/profile/MyArticlesSection.vue';
 import { useUserStore } from '../stores/state';
+import axios from 'axios';
 
 export default {
     components: {
@@ -21,14 +22,26 @@ export default {
     data() {
         return {
             user: useUserStore(),
-            artigos: 3,
         };
+    },
+    async created() {
+        try {
+            const auth = {
+                Authorization: `Bearer ${this.user.jwt}`
+            };
+            const response = await axios.get(`users/me?populate=*`, {
+                headers: auth
+            });
+        } catch (error) {
+            console.error('Failed to fetch user data:', error);
+        }
     }
 };
 </script>
   
 <style scoped>
 .larger-font {
-    font-size: 20px; /* Adjust the font size as needed */
+    font-size: 20px;
+    /* Adjust the font size as needed */
 }
 </style>

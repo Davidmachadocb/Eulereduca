@@ -12,8 +12,6 @@
   </div>
 </template>
 
-
-  
 <script>
 import axios from "axios";
 import Comentarios from '../components/comentario/Comentarios.vue';
@@ -22,6 +20,7 @@ export default {
   data() {
     return {
       article: null,
+      comments: []
     };
   },
   components: {

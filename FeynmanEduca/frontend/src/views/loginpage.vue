@@ -40,26 +40,25 @@ export default {
           password: this.password
         });
 
-        // Handle successful login
-        console.log(data); // You can do something with the response data here
-
         // Redirect to the desired page
-        const jwt = data.jwt;
+        const {jwt, user} = data  
 
-        const res = await axios.get("/users/me", {
-          params: {
-            populate: ['role']
-          },
-          headers: {
-            Authorization: `Bearer ${jwt}`
-          }
+        const auth = {
+                Authorization: `Bearer ${jwt}`
+        };
+        
+        const response = await axios.get(`users/me?populate=*`, {
+                headers: auth
         });
+        
+        console.log(response.data.role.name)
 
         const userStore  = useUserStore()
-        userStore.username = res.data.username
-        userStore.role = res.data.role
+        userStore.username =  user.username
+        userStore.role = response.data.role.name
         userStore.jwt = jwt
-        this.saveLocally(res.data, jwt);
+        userStore.id = user.id
+        this.saveLocally(user, jwt, response.data.role.name);
         this.$router.push('/profile');
 
       } catch (error) {
@@ -68,10 +67,11 @@ export default {
         this.loginError = 'Email or password is not correct'; // Set the error message
       }
     },
-    saveLocally(user, jwt) {
+    saveLocally(user, jwt, role) {
+      localStorage.setItem('id', user.id)
       localStorage.setItem("username", user.username);
       localStorage.setItem("token", jwt);
-      localStorage.setItem("role", user.role);
+      localStorage.setItem("role", role);
     }
   }
 };

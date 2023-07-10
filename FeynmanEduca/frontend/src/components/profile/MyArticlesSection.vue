@@ -2,13 +2,14 @@
   <div class="album py-5 bg-light">
     <div class="container">
       <div class="row">
-        <div class="col-md-4" v-for="article in userArticles" :key="article.id">
+        <div class="col-md-4" v-for="article in articles" :key="article.id">
           <div class="card mb-4 box-shadow">
             <div class="card-body">
-              <h5 class="card-title" style="font-weight: bold; font-size: 1.2rem;">{{ article.attributes.Titulo }}</h5>
-              <p class="card-text">{{ truncateText(article.attributes.Resumo, 250) }}</p>
+              <h5 class="card-title" style="font-weight: bold; font-size: 1.2rem;">{{ article.Titulo }}</h5>
+              <p class="card-text">{{ truncateText(article.Resumo, 250) }}</p>
               <div class="d-flex justify-content-between align-items-center">
                 <router-link :to="'/artigo/' + article.id" class="btn btn-primary">Leia mais</router-link>
+                <router-link :to="'/editar-artigo/' + article.id" class="btn btn-sm btn-secondary">Editar</router-link>
                 <button type="button" class="btn btn-sm btn-danger" @click="deleteArticle(article.id)">Delete</button>
               </div>
             </div>
@@ -20,7 +21,6 @@
 </template>
 
 <script>
-import { ref } from "vue";
 import axios from "axios";
 import { useUserStore } from '../../stores/state';
 
@@ -30,45 +30,49 @@ export default {
       articles: [],
     };
   },
-  setup() {
-    const user = useUserStore();
-    const userArticles = ref([]);
-
-    const fetchArticles = async () => {
+  methods: {
+    async fetchArticles() {
       try {
-        const response = await axios.get("artigos");
-        userArticles.value = response.data.data.filter(
-          (article) => article.attributes.Autor === user.username
-        );
+        const user = useUserStore();
+        const auth = {
+          Authorization: `Bearer ${user.jwt}`
+        };
+        const response = await axios.get("users/me?populate=artigos", {
+          headers: auth
+        });
+        this.articles = response.data.artigos;
       } catch (error) {
         console.error("Error fetching articles:", error);
       }
-    };
-
-    const deleteArticle = async (articleId) => {
+    },
+    async deleteArticle(articleId) {
       try {
-        await axios.delete(`artigos/${articleId}`);
-        fetchArticles();
+        const user = useUserStore();
+        const auth = {
+          Authorization: `Bearer ${user.jwt}`
+        };
+        await axios.delete(`artigos/${articleId}`, {
+          headers: auth
+        });
+        this.fetchArticles();
       } catch (error) {
         console.error("Error deleting article:", error);
       }
-    };
-
-    fetchArticles();
-
-    return {
-      userArticles,
-      truncateText(text, limit) {
-        if (text.length <= limit) {
-          return text;
-        }
-        return text.substring(0, limit) + "...";
-      },
-      deleteArticle,
-    };
+    },
+    truncateText(text, limit) {
+      if (text.length <= limit) {
+        return text;
+      }
+      return text.substring(0, limit) + "...";
+    },
+  },
+  mounted() {
+    this.fetchArticles();
   },
 };
 </script>
+
+
 
 <style>
 /* Custom styles */
